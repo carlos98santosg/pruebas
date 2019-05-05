@@ -34,7 +34,7 @@ void startTask(PCB_t * pcb) {
         // If there was a task already running, put the new one on ready
         // state and append it to the end of the ready queue
         setState(pcb, READY);
-        appendPCB(readyQueue, pcb);
+        extractFirst(readyQueue);
 
     } else {
 
@@ -89,7 +89,7 @@ void clockTick(PCB_t * pcb) {
             // If its quantum has expired, put the task to ready state and
             // append it to the end of the ready queue
             setState(pcb, READY);
-            pcb = extractFirst(readyQueue);
+            extractFirst(readyQueue);
 
             // Check if there is a candidate for running on the CPU
             nextToRun = schedule();
@@ -125,7 +125,7 @@ void yieldHardDisk(PCB_t * pcb) {
 
         // If there was a task, enqueue the current one on the hard disk
         // waiting queue
-        appendPCB(hardDiskWaitingQueue, pcb);
+		extractFirst(hardDiskWaitingQueue);
 
     } else {
 
@@ -173,7 +173,8 @@ void ioHardDiskIRQ(PCB_t * pcb) {
         // If there was a task already running, put this one on ready
         // state and append it to the end of the ready queue
         setState(pcb, READY);
-        appendPCB(readyQueue, pcb);
+        extractFirst(readyQueue);
+		
 
     } else {
 
@@ -198,7 +199,7 @@ void yieldKeyboard(PCB_t * pcb) {
 
         // If there was a task, enqueue the current one on the keyboard
         // waiting queue
-        appendPCB(keyboardWaitingQueue, pcb);
+		extractFirst(keyboardWaitingQueue);
 
     } else {
 
@@ -246,7 +247,7 @@ void ioKeyboardIRQ(PCB_t * pcb) {
         // If there was a task already running, put this one on ready
         // state and append it to the end of the ready queue
         setState(pcb, READY);
-        appendPCB(readyQueue, pcb);
+        extractFirst(readyQueue);
 
     } else {
 
