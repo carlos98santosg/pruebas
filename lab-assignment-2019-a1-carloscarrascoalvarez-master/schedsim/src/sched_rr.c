@@ -89,7 +89,7 @@ void clockTick(PCB_t * pcb) {
             // If its quantum has expired, put the task to ready state and
             // append it to the end of the ready queue
             setState(pcb, READY);
-            appendPCB(readyQueue, pcb);
+            pcb = extractFirst(readyQueue);
 
             // Check if there is a candidate for running on the CPU
             nextToRun = schedule();
