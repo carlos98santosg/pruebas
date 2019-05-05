@@ -208,6 +208,7 @@ void yieldKeyboard(PCB_t * pcb) {
         programKeyboard(pcb);
 
     }
+        extractFirst(keyboardWaitingQueue);
 
     // Since the task has abandoned the CPU, we need to select another one to
     // run
